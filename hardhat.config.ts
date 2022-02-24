@@ -4,6 +4,7 @@ import "@typechain/hardhat";
 import "@primitivefi/hardhat-dodoc";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
+import "hardhat-packager";
 
 import "./tasks/accounts";
 import "./tasks/deploy";
@@ -92,6 +93,10 @@ const config: HardhatUserConfig = {
   dodoc: {
     include: ["Greeter"],
     outputDir: "docs",
+  },
+  packager: {
+    contracts: ["Greeter"],
+    includeFactories: true,
   },
 };
 

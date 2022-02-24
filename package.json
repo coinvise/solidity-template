@@ -29,6 +29,7 @@
     "@typescript-eslint/parser": "^5.12.0",
     "chai": "^4.3.6",
     "commitizen": "^4.2.4",
+    "copyfiles": "^2.4.1",
     "cross-env": "^7.0.3",
     "cz-conventional-changelog": "^3.3.0",
     "dotenv": "^16.0.0",
@@ -39,6 +40,7 @@
     "fs-extra": "^10.0.0",
     "hardhat": "^2.8.4",
     "hardhat-gas-reporter": "^1.0.8",
+    "hardhat-packager": "^1.3.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.4",
     "lodash": "^4.17.21",
@@ -58,7 +60,9 @@
     "typescript": "^4.5.5"
   },
   "files": [
-    "/contracts"
+    "/artifacts",
+    "/contracts",
+    "/dist"
   ],
   "keywords": [
     "blockchain",
@@ -68,23 +72,26 @@
     "solidity"
   ],
   "publishConfig": {
-    "access": "public"
+    "registry": "https://npm.pkg.github.com/"
   },
   "scripts": {
-    "clean": "shx rm -rf ./artifacts ./cache ./coverage ./src/types ./coverage.json",
+    "build:types": "yarn prepare:types && tsc --project ./tsconfig.prod.json && copyfiles --up 1 \"./src/**/*.d.ts\" ./dist",
+    "clean": "shx rm -rf ./artifacts ./cache ./coverage ./src/types ./dist ./coverage.json",
     "commit": "git-cz",
-    "compile": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat compile && yarn prettier --loglevel silent",
+    "compile": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat compile && yarn prettier:silent",
     "coverage": "yarn typechain && hardhat coverage --solcoverjs ./.solcover.js --temp artifacts --testfiles \"test/**/*.ts\" && yarn typechain",
     "deploy": "hardhat deploy:Greeter",
     "lint": "yarn lint:sol && yarn lint:ts && yarn prettier:check",
     "lint:sol": "solhint --config ./.solhint.json --max-warnings 0 \"contracts/**/*.sol\"",
     "lint:ts": "eslint --config ./.eslintrc.yaml --ignore-path ./.eslintignore --ext .js,.ts .",
     "postinstall": "husky install",
-    "postpublish": "pinst --enable",
-    "prepublishOnly": "pinst --disable",
+    "postpack": "pinst --enable",
+    "prepack": "pinst --disable && yarn build:types",
+    "prepare:types": "yarn hardhat prepare-package && yarn prettier:silent",
     "prettier": "prettier --config ./.prettierrc.yaml --write \"**/*.{js,json,md,sol,ts}\"",
     "prettier:check": "prettier --check --config ./.prettierrc.yaml \"**/*.{js,json,md,sol,ts}\"",
+    "prettier:silent": "yarn prettier --loglevel silent",
     "test": "hardhat test",
-    "typechain": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat typechain && yarn prettier --loglevel silent"
+    "typechain": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat typechain && yarn prettier:silent"
   }
 }
