@@ -28,8 +28,10 @@ yarn-error.log*
 src/types/*
 !src/types/common.ts
 !src/types/Greeter.ts
+!src/types/ERC20.ts
 
 # factories
 !src/types/factories
 src/types/factories/*
 !src/types/factories/Greeter__factory.ts
+!src/types/factories/ERC20__factory.ts
