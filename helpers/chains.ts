@@ -9,7 +9,8 @@ export const CHAIN_IDS = {
   kovan: 42,
   mainnet: 1,
   optimism: 10,
-  polygon: 137,
+  "polygon-mainnet": 137,
+  "polygon-mumbai": 80001,
   rinkeby: 4,
   ropsten: 3,
 };
