@@ -47,6 +47,7 @@
     "prettier-plugin-solidity": "^1.0.0-dev.21",
     "shelljs": "^0.8.5",
     "shx": "^0.3.4",
+    "solc": "^0.8.12",
     "solhint": "^3.3.7",
     "solhint-plugin-prettier": "^0.0.5",
     "solidity-coverage": "^0.7.20",
