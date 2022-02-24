@@ -18,7 +18,7 @@ contract Greeter {
         greeting = _greeting;
     }
 
-    function greet() public view returns (string memory) {
+    function greet() public view returns (string memory greeting_) {
         return greeting;
     }
 
@@ -45,7 +45,7 @@ contract Greeter {
         emit GreetingsWithdrawn(msg.sender, _token, _amount);
     }
 
-    function greetings(address _sender, IERC20 _token) public view returns (uint256 greetingsRemaining) {
+    function greetings(address _sender, IERC20 _token) public view returns (uint256 greetingsSent_) {
         return greetingsSent[_sender][address(_token)];
     }
 }

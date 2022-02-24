@@ -83,7 +83,7 @@ const _abi = [
     outputs: [
       {
         internalType: "string",
-        name: "",
+        name: "greeting_",
         type: "string",
       },
     ],
@@ -120,7 +120,7 @@ const _abi = [
     outputs: [
       {
         internalType: "uint256",
-        name: "greetingsRemaining",
+        name: "greetingsSent_",
         type: "uint256",
       },
     ],

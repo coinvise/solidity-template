@@ -127,7 +127,7 @@ export interface Greeter extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    greet(overrides?: CallOverrides): Promise<[string]>;
+    greet(overrides?: CallOverrides): Promise<[string] & { greeting_: string }>;
 
     greeting(overrides?: CallOverrides): Promise<[string]>;
 
@@ -135,7 +135,7 @@ export interface Greeter extends BaseContract {
       _sender: string,
       _token: string,
       overrides?: CallOverrides
-    ): Promise<[BigNumber] & { greetingsRemaining: BigNumber }>;
+    ): Promise<[BigNumber] & { greetingsSent_: BigNumber }>;
 
     greetingsSent(
       arg0: string,
