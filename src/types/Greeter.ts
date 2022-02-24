@@ -4,6 +4,7 @@
 import {
   BaseContract,
   BigNumber,
+  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -12,7 +13,7 @@ import {
   Signer,
   utils,
 } from "ethers";
-import { FunctionFragment, Result } from "@ethersproject/abi";
+import { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
 import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
@@ -21,28 +22,82 @@ export interface GreeterInterface extends utils.Interface {
   functions: {
     "greet()": FunctionFragment;
     "greeting()": FunctionFragment;
+    "greetings(address,address)": FunctionFragment;
+    "greetingsSent(address,address)": FunctionFragment;
+    "sendGreeting(address,uint256)": FunctionFragment;
     "setGreeting(string)": FunctionFragment;
     "throwError()": FunctionFragment;
+    "withdrawGreeting(address,uint256)": FunctionFragment;
   };
 
   encodeFunctionData(functionFragment: "greet", values?: undefined): string;
   encodeFunctionData(functionFragment: "greeting", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "greetings",
+    values: [string, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "greetingsSent",
+    values: [string, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "sendGreeting",
+    values: [string, BigNumberish]
+  ): string;
   encodeFunctionData(functionFragment: "setGreeting", values: [string]): string;
   encodeFunctionData(
     functionFragment: "throwError",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawGreeting",
+    values: [string, BigNumberish]
+  ): string;
 
   decodeFunctionResult(functionFragment: "greet", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "greeting", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "greetings", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "greetingsSent",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "sendGreeting",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "setGreeting",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "throwError", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawGreeting",
+    data: BytesLike
+  ): Result;
 
-  events: {};
+  events: {
+    "GreetingsSent(address,address,uint256)": EventFragment;
+    "GreetingsWithdrawn(address,address,uint256)": EventFragment;
+  };
+
+  getEvent(nameOrSignatureOrTopic: "GreetingsSent"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "GreetingsWithdrawn"): EventFragment;
 }
+
+export type GreetingsSentEvent = TypedEvent<
+  [string, string, BigNumber],
+  { _sender: string; _token: string; _amount: BigNumber }
+>;
+
+export type GreetingsSentEventFilter = TypedEventFilter<GreetingsSentEvent>;
+
+export type GreetingsWithdrawnEvent = TypedEvent<
+  [string, string, BigNumber],
+  { _withdrawer: string; _token: string; _amount: BigNumber }
+>;
+
+export type GreetingsWithdrawnEventFilter =
+  TypedEventFilter<GreetingsWithdrawnEvent>;
 
 export interface Greeter extends BaseContract {
   contractName: "Greeter";
@@ -76,17 +131,59 @@ export interface Greeter extends BaseContract {
 
     greeting(overrides?: CallOverrides): Promise<[string]>;
 
+    greetings(
+      _sender: string,
+      _token: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { greetingsRemaining: BigNumber }>;
+
+    greetingsSent(
+      arg0: string,
+      arg1: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    sendGreeting(
+      _token: string,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     setGreeting(
       _greeting: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     throwError(overrides?: CallOverrides): Promise<[void]>;
+
+    withdrawGreeting(
+      _token: string,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
   };
 
   greet(overrides?: CallOverrides): Promise<string>;
 
   greeting(overrides?: CallOverrides): Promise<string>;
+
+  greetings(
+    _sender: string,
+    _token: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  greetingsSent(
+    arg0: string,
+    arg1: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  sendGreeting(
+    _token: string,
+    _amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   setGreeting(
     _greeting: string,
@@ -95,22 +192,92 @@ export interface Greeter extends BaseContract {
 
   throwError(overrides?: CallOverrides): Promise<void>;
 
+  withdrawGreeting(
+    _token: string,
+    _amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   callStatic: {
     greet(overrides?: CallOverrides): Promise<string>;
 
     greeting(overrides?: CallOverrides): Promise<string>;
 
+    greetings(
+      _sender: string,
+      _token: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    greetingsSent(
+      arg0: string,
+      arg1: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    sendGreeting(
+      _token: string,
+      _amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     setGreeting(_greeting: string, overrides?: CallOverrides): Promise<void>;
 
     throwError(overrides?: CallOverrides): Promise<void>;
+
+    withdrawGreeting(
+      _token: string,
+      _amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
   };
 
-  filters: {};
+  filters: {
+    "GreetingsSent(address,address,uint256)"(
+      _sender?: null,
+      _token?: null,
+      _amount?: null
+    ): GreetingsSentEventFilter;
+    GreetingsSent(
+      _sender?: null,
+      _token?: null,
+      _amount?: null
+    ): GreetingsSentEventFilter;
+
+    "GreetingsWithdrawn(address,address,uint256)"(
+      _withdrawer?: null,
+      _token?: null,
+      _amount?: null
+    ): GreetingsWithdrawnEventFilter;
+    GreetingsWithdrawn(
+      _withdrawer?: null,
+      _token?: null,
+      _amount?: null
+    ): GreetingsWithdrawnEventFilter;
+  };
 
   estimateGas: {
     greet(overrides?: CallOverrides): Promise<BigNumber>;
 
     greeting(overrides?: CallOverrides): Promise<BigNumber>;
+
+    greetings(
+      _sender: string,
+      _token: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    greetingsSent(
+      arg0: string,
+      arg1: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    sendGreeting(
+      _token: string,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     setGreeting(
       _greeting: string,
@@ -118,6 +285,12 @@ export interface Greeter extends BaseContract {
     ): Promise<BigNumber>;
 
     throwError(overrides?: CallOverrides): Promise<BigNumber>;
+
+    withdrawGreeting(
+      _token: string,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -125,11 +298,35 @@ export interface Greeter extends BaseContract {
 
     greeting(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    greetings(
+      _sender: string,
+      _token: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    greetingsSent(
+      arg0: string,
+      arg1: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    sendGreeting(
+      _token: string,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     setGreeting(
       _greeting: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     throwError(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    withdrawGreeting(
+      _token: string,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
   };
 }
