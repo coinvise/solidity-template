@@ -11,41 +11,14 @@ import { resolve } from "path";
 
 import { config as dotenvConfig } from "dotenv";
 import { HardhatUserConfig } from "hardhat/config";
-import { NetworkUserConfig } from "hardhat/types";
 import { getEnvVar } from "./helpers/env";
+import { CHAIN_IDS, getChainConfig } from "./helpers/chains";
 
 dotenvConfig({ path: resolve(__dirname, "./.env") });
 
 // Ensure that we have all the environment variables we need.
 const infuraApiKey: string = getEnvVar("INFURA_API_KEY");
 const mnemonic: string = getEnvVar("MNEMONIC");
-
-const chainIds = {
-  arbitrumOne: 42161,
-  avalanche: 43114,
-  bsc: 56,
-  goerli: 5,
-  hardhat: 31337,
-  kovan: 42,
-  mainnet: 1,
-  optimism: 10,
-  polygon: 137,
-  rinkeby: 4,
-  ropsten: 3,
-};
-
-function getChainConfig(network: keyof typeof chainIds): NetworkUserConfig {
-  const url: string = "https://" + network + ".infura.io/v3/" + infuraApiKey;
-  return {
-    accounts: {
-      count: 10,
-      mnemonic,
-      path: "m/44'/60'/0'/0",
-    },
-    chainId: chainIds[network],
-    url,
-  };
-}
 
 const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
@@ -74,18 +47,18 @@ const config: HardhatUserConfig = {
       accounts: {
         mnemonic,
       },
-      chainId: chainIds.hardhat,
+      chainId: CHAIN_IDS.hardhat,
     },
-    arbitrumOne: getChainConfig("arbitrumOne"),
-    avalanche: getChainConfig("avalanche"),
-    bsc: getChainConfig("bsc"),
-    goerli: getChainConfig("goerli"),
-    kovan: getChainConfig("kovan"),
-    mainnet: getChainConfig("mainnet"),
-    optimism: getChainConfig("optimism"),
-    polygon: getChainConfig("polygon"),
-    rinkeby: getChainConfig("rinkeby"),
-    ropsten: getChainConfig("ropsten"),
+    arbitrumOne: getChainConfig("arbitrumOne", infuraApiKey, mnemonic),
+    avalanche: getChainConfig("avalanche", infuraApiKey, mnemonic),
+    bsc: getChainConfig("bsc", infuraApiKey, mnemonic),
+    goerli: getChainConfig("goerli", infuraApiKey, mnemonic),
+    kovan: getChainConfig("kovan", infuraApiKey, mnemonic),
+    mainnet: getChainConfig("mainnet", infuraApiKey, mnemonic),
+    optimism: getChainConfig("optimism", infuraApiKey, mnemonic),
+    polygon: getChainConfig("polygon", infuraApiKey, mnemonic),
+    rinkeby: getChainConfig("rinkeby", infuraApiKey, mnemonic),
+    ropsten: getChainConfig("ropsten", infuraApiKey, mnemonic),
   },
   paths: {
     artifacts: "./artifacts",
