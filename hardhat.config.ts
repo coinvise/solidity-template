@@ -1,6 +1,7 @@
 import "@nomiclabs/hardhat-waffle";
 import "@nomiclabs/hardhat-etherscan";
 import "@typechain/hardhat";
+import "@primitivefi/hardhat-dodoc";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
 
@@ -87,6 +88,10 @@ const config: HardhatUserConfig = {
   typechain: {
     outDir: "src/types",
     target: "ethers-v5",
+  },
+  dodoc: {
+    include: ["Greeter"],
+    outputDir: "docs",
   },
 };
 
