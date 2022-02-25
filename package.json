@@ -78,7 +78,7 @@
     "build:types": "yarn prepare:types && tsc --project ./tsconfig.prod.json && copyfiles --up 1 \"./src/**/*.d.ts\" ./dist",
     "clean": "shx rm -rf ./artifacts ./cache ./coverage ./src/types ./dist ./coverage.json",
     "commit": "git-cz",
-    "compile": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat compile && yarn prettier:silent",
+    "compile": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat compile",
     "coverage": "yarn typechain && hardhat coverage --solcoverjs ./.solcover.js --temp artifacts --testfiles \"test/**/*.ts\" && yarn typechain",
     "deploy": "hardhat deploy:Greeter",
     "docs": "hardhat dodoc",
@@ -88,11 +88,11 @@
     "postinstall": "husky install",
     "postpack": "pinst --enable",
     "prepack": "pinst --disable && yarn build:types",
-    "prepare:types": "yarn hardhat prepare-package && yarn prettier:silent",
+    "prepare:types": "yarn hardhat prepare-package",
     "prettier": "prettier --config ./.prettierrc.yaml --write \"**/*.{js,json,md,sol,ts}\"",
     "prettier:check": "prettier --check --config ./.prettierrc.yaml \"**/*.{js,json,md,sol,ts}\"",
     "prettier:silent": "yarn prettier --loglevel silent",
     "test": "cross-env REPORT_GAS=true hardhat test",
-    "typechain": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat typechain && yarn prettier:silent"
+    "typechain": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat typechain"
   }
 }
