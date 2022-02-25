@@ -91,6 +91,7 @@ const config: HardhatUserConfig = {
     target: "ethers-v5",
   },
   dodoc: {
+    runOnCompile: false,
     include: ["Greeter"],
     outputDir: "docs",
   },
