@@ -3,7 +3,7 @@ import { artifacts, waffle } from "hardhat";
 import type { Artifact } from "hardhat/types";
 
 import { Greeter } from "../../src/types/Greeter";
-import { ERC20 } from "../../src/types/ERC20";
+import { ERC20Token } from "../../src/types/ERC20Token";
 import { BigNumber } from "ethers";
 
 const { deployContract } = waffle;
@@ -14,8 +14,15 @@ export async function deployGreeter(deployer: Signer, greeting: string): Promise
   return greeter;
 }
 
-export async function deployERC20(deployer: Signer, name: string, symbol: string, decimals: BigNumber): Promise<ERC20> {
-  const erc20Artifact: Artifact = await artifacts.readArtifact("ERC20");
-  const erc20: ERC20 = <ERC20>await deployContract(deployer, erc20Artifact, [name, symbol, decimals]);
-  return erc20;
+export async function deployERC20Token(
+  deployer: Signer,
+  name: string,
+  symbol: string,
+  decimals: BigNumber,
+): Promise<ERC20Token> {
+  const erc20TokenArtifact: Artifact = await artifacts.readArtifact("ERC20Token");
+  const erc20Token: ERC20Token = <ERC20Token>(
+    await deployContract(deployer, erc20TokenArtifact, [name, symbol, decimals])
+  );
+  return erc20Token;
 }

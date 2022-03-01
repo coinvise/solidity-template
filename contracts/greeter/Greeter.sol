@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.4;
 
-import { IERC20 } from "../token/ERC20.sol";
+import { IERC20 } from "../interfaces/IERC20.sol";
 
 /// @notice Emitted when throwError() is called
 error GreeterError();

@@ -2,7 +2,7 @@ import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/dist/src/signe
 import type { MockContract } from "ethereum-waffle";
 import type { Fixture } from "ethereum-waffle";
 
-import { ERC20 } from "../../src/types/ERC20";
+import { ERC20Token } from "../../src/types/ERC20Token";
 import { Greeter } from "../../src/types/Greeter";
 
 declare module "mocha" {
@@ -16,12 +16,12 @@ declare module "mocha" {
 
 export interface Contracts {
   greeter: Greeter;
-  erc20: ERC20;
+  erc20Token: ERC20Token;
 }
 
 export interface Mocks {
   greeter: MockContract;
-  erc20: MockContract;
+  erc20Token: MockContract;
 }
 
 export interface Signers {
