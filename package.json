@@ -3,8 +3,8 @@
   "description": "Template for writing Solidity smart contracts",
   "version": "1.0.0",
   "author": {
-    "name": "Sebastian T F",
-    "url": "https://github.com/sebastiantf"
+    "name": "Coinvise",
+    "url": "https://github.com/coinvise"
   },
   "devDependencies": {
     "@codechecks/client": "^0.1.12",
