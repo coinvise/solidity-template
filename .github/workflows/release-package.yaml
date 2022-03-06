@@ -1,0 +1,62 @@
+name: Publish package on release
+
+env:
+  INFURA_API_KEY: ${{ secrets.INFURA_API_KEY }}
+  MNEMONIC: ${{ secrets.MNEMONIC }}
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          cache: yarn
+          node-version: 16
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Compile contracts and generate TypeChain bindings
+        run: yarn typechain
+
+      - name: Test contracts
+        run: yarn coverage
+
+  publish-gpr:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          cache: yarn
+          node-version: 16
+          registry-url: https://npm.pkg.github.com/
+          scope: "@cherokee-maverick"
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Setup publishing
+        run: |
+          yarn config set npmAuthToken $PUBLISH_TOKEN
+          yarn config set npmAlwaysAuth true
+        env:
+          PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+
+      - name: Publish package
+        run: yarn npm publish

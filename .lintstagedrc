@@ -1,5 +1,14 @@
 {
-  "*.{js,json,md,sol,ts,yaml,yml}": [
+  "*.{js,json,md,ts,yaml,yml}": [
     "prettier --config ./.prettierrc.yaml --write"
+  ],
+  "*.{js,ts}": [
+    "eslint --config ./.eslintrc.yaml --ignore-path ./.eslintignore --ext .js,.ts",
+    "bash -c 'tsc --pretty --noEmit'"
+  ],
+  "*.sol": [
+    "prettier --config ./.prettierrc.yaml --write",
+    "solhint --config ./.solhint.json --max-warnings 0",
+    "solcjs --abi --include-path node_modules/ --base-path . -o ./artifacts",
   ]
 }
