@@ -43,3 +43,15 @@ jobs:
           fail_ci_if_error: false
           files: ./coverage/lcov.info
           verbose: true
+
+      - name: Run Slither
+        uses: crytic/slither-action@v0.1.1
+        continue-on-error: true
+        id: slither
+        with:
+          sarif: results.sarif
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: ${{ steps.slither.outputs.sarif }}
