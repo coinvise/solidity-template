@@ -115,6 +115,7 @@ __metadata:
     "@codechecks/client": ^0.1.12
     "@commitlint/cli": ^16.2.1
     "@commitlint/config-conventional": ^16.2.1
+    "@ethereum-waffle/mock-contract": ^4.0.4
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/abstract-signer": ^5.5.0
     "@ethersproject/bignumber": ^5.5.0
@@ -385,6 +386,15 @@ __metadata:
     minimatch: ^3.0.4
     strip-json-comments: ^3.1.1
   checksum: 784aa2157e2808b52bbbaf1d1cfca9a6ba0b2faaa3696eb7a1229d4b357400fbd8a6aa09a16e7ae0868ea075d3a8f365cf5928b6d05a1df47f40a1167423a4fa
+  languageName: node
+  linkType: hard
+
+"@ethereum-waffle/mock-contract@npm:^4.0.4":
+  version: 4.0.4
+  resolution: "@ethereum-waffle/mock-contract@npm:4.0.4"
+  peerDependencies:
+    ethers: "*"
+  checksum: 45bea2ba4615a0bb81692c3d647ad39c2c37fcf250b577aeb6c5aad03fd4d0912d8d9ef5de638ab276ece1eb9ca1d09d23ed297d96da683fe34e0b01ba631da9
   languageName: node
   linkType: hard
 
