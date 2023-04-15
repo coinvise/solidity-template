@@ -1,9 +1,5 @@
-import "@nomiclabs/hardhat-waffle";
-import "@nomiclabs/hardhat-etherscan";
-import "@typechain/hardhat";
+import "@nomicfoundation/hardhat-toolbox";
 import "@primitivefi/hardhat-dodoc";
-import "hardhat-gas-reporter";
-import "solidity-coverage";
 import "hardhat-packager";
 
 import "./tasks/accounts";
