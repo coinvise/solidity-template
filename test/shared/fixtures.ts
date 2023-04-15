@@ -1,4 +1,4 @@
-import type { Signer } from "@ethersproject/abstract-signer";
+import { Signer } from "ethers";
 import type { MockContract } from "ethereum-waffle";
 import { ERC20Token } from "../../src/types/test/ERC20Token";
 import { Greeter } from "../../src/types/greeter";
