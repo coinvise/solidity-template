@@ -1,5 +1,5 @@
 import { Signer } from "ethers";
-import type { MockContract } from "ethereum-waffle";
+import type { MockContract } from "@ethereum-waffle/mock-contract";
 import { ERC20Token } from "../../src/types/test/ERC20Token";
 import { Greeter } from "../../src/types/greeter";
 import { ERC20_TOKEN_DECIMALS, ERC20_TOKEN_NAME, ERC20_TOKEN_SYMBOL, GREETING } from "../../helpers/constants";

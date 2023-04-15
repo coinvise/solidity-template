@@ -1,11 +1,8 @@
-import type { Signer } from "@ethersproject/abstract-signer";
-import { BigNumber } from "ethers";
+import { BigNumber, Signer } from "ethers";
 import { Zero } from "@ethersproject/constants";
-import { MockContract } from "ethereum-waffle";
+import { deployMockContract, MockContract } from "@ethereum-waffle/mock-contract";
 import hre from "hardhat";
 import type { Artifact } from "hardhat/types";
-
-const { deployMockContract } = hre.waffle;
 
 export async function deployMockERC20Token(
   deployer: Signer,

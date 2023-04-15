@@ -1,9 +1,10 @@
 import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/dist/src/signer-with-address";
-import type { MockContract } from "ethereum-waffle";
-import type { Fixture } from "ethereum-waffle";
+import type { MockContract } from "@ethereum-waffle/mock-contract";
 
 import { ERC20Token } from "../../src/types/test/ERC20Token";
 import { Greeter } from "../../src/types/greeter";
+
+type Fixture<T> = () => Promise<T>;
 
 declare module "mocha" {
   interface Context {
