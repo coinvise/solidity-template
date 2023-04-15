@@ -1,8 +1,8 @@
 import { task, types } from "hardhat/config";
 import { TaskArguments } from "hardhat/types";
 
-import { Greeter } from "../../src/types/Greeter";
-import { Greeter__factory } from "../../src/types/factories/Greeter__factory";
+import { Greeter } from "../../src/types/greeter";
+import { Greeter__factory } from "../../src/types/factories/greeter";
 import { SUBTASK_DEPLOY_VERIFY, SUBTASK_DEPLOY_WAIT_FOR_CONFIRMATIONS, TASK_DEPLOY_GREETER } from "../constants";
 
 task(TASK_DEPLOY_GREETER)

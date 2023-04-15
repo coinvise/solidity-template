@@ -2,8 +2,8 @@ import type { Signer } from "@ethersproject/abstract-signer";
 import { artifacts, waffle } from "hardhat";
 import type { Artifact } from "hardhat/types";
 
-import { Greeter } from "../../src/types/Greeter";
-import { ERC20Token } from "../../src/types/ERC20Token";
+import { Greeter } from "../../src/types/greeter";
+import { ERC20Token } from "../../src/types/test/ERC20Token";
 import { BigNumber } from "ethers";
 
 const { deployContract } = waffle;
