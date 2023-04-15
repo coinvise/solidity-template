@@ -5,7 +5,7 @@ pragma solidity >=0.8.4;
 import { IERC20 } from "../interfaces/IERC20.sol";
 
 contract ERC20Token is IERC20 {
-    uint256 private constant MAX_UINT256 = 2**256 - 1;
+    uint256 private constant MAX_UINT256 = 2 ** 256 - 1;
     mapping(address => uint256) public balances;
     mapping(address => mapping(address => uint256)) public allowed;
     uint256 public totalSupply;
@@ -19,11 +19,7 @@ contract ERC20Token is IERC20 {
     uint8 public decimals; //How many decimals to show.
     string public symbol; //An identifier: eg SBX
 
-    constructor(
-        string memory _tokenName,
-        string memory _tokenSymbol,
-        uint8 _decimalUnits
-    ) {
+    constructor(string memory _tokenName, string memory _tokenSymbol, uint8 _decimalUnits) {
         name = _tokenName; // Set the name for display purposes
         symbol = _tokenSymbol; // Set the symbol for display purposes
         decimals = _decimalUnits; // Amount of decimals for display purposes
@@ -37,11 +33,7 @@ contract ERC20Token is IERC20 {
         return true;
     }
 
-    function transferFrom(
-        address _from,
-        address _to,
-        uint256 _value
-    ) public override returns (bool success) {
+    function transferFrom(address _from, address _to, uint256 _value) public override returns (bool success) {
         uint256 _allowance = allowed[_from][msg.sender];
         require(
             balances[_from] >= _value && _allowance >= _value,
