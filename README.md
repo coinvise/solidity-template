@@ -5,7 +5,7 @@ My favorite setup for writing Solidity smart contracts.
 - [Hardhat](https://github.com/nomiclabs/hardhat): compile and run the smart contracts on a local development network
 - [TypeChain](https://github.com/ethereum-ts/TypeChain): generate TypeScript types for smart contracts
 - [Ethers](https://github.com/ethers-io/ethers.js/): renowned Ethereum library and wallet implementation
-- [Waffle](https://github.com/EthWorks/Waffle): tooling for writing comprehensive smart contract tests
+- [Hardhat Toolbox](https://hardhat.org/hardhat-runner/plugins/nomicfoundation-hardhat-toolbox): bundles all recommended packages and plugins. Good alternative for [Waffle](https://github.com/EthWorks/Waffle)
 - [Solhint](https://github.com/protofire/solhint): linter
 - [Solcover](https://github.com/sc-forks/solidity-coverage): code coverage
 - [Prettier Plugin Solidity](https://github.com/prettier-solidity/prettier-plugin-solidity): code formatter

@@ -1,8 +1,7 @@
 // eslint-disable @typescript-eslint/no-explicit-any
-import type { Signer } from "@ethersproject/abstract-signer";
-import type { Wallet } from "@ethersproject/wallet";
 import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/dist/src/signer-with-address";
-import { ethers, waffle } from "hardhat";
+import { ethers } from "hardhat";
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import type { Contracts, Mocks, Signers } from "./types";
 
@@ -21,8 +20,7 @@ export function baseContext(description: string, hooks: () => void): void {
       this.signers.david = signers[3];
       this.signers.eve = signers[4];
 
-      // Get rid of this when https://github.com/nomiclabs/hardhat/issues/849 gets fixed.
-      this.loadFixture = waffle.createFixtureLoader(signers as Signer[] as Wallet[]);
+      this.loadFixture = loadFixture;
     });
 
     hooks();

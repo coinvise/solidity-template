@@ -1,16 +1,13 @@
-import type { Signer } from "@ethersproject/abstract-signer";
-import { artifacts, waffle } from "hardhat";
-import type { Artifact } from "hardhat/types";
-
-import { Greeter } from "../../src/types/Greeter";
-import { ERC20Token } from "../../src/types/ERC20Token";
-import { BigNumber } from "ethers";
-
-const { deployContract } = waffle;
+import { ethers } from "hardhat";
+import { Greeter } from "../../src/types/greeter";
+import { ERC20Token } from "../../src/types/test/ERC20Token";
+import { BigNumber, Signer } from "ethers";
+import { Greeter__factory } from "../../src/types/factories/greeter";
+import { ERC20Token__factory } from "../../src/types/factories/test";
 
 export async function deployGreeter(deployer: Signer, greeting: string): Promise<Greeter> {
-  const greeterArtifact: Artifact = await artifacts.readArtifact("Greeter");
-  const greeter: Greeter = <Greeter>await deployContract(deployer, greeterArtifact, [greeting]);
+  const greeterFactory: Greeter__factory = <Greeter__factory>await ethers.getContractFactory("Greeter");
+  const greeter: Greeter = <Greeter>await greeterFactory.connect(deployer).deploy(greeting);
   return greeter;
 }
 
@@ -20,9 +17,7 @@ export async function deployERC20Token(
   symbol: string,
   decimals: BigNumber,
 ): Promise<ERC20Token> {
-  const erc20TokenArtifact: Artifact = await artifacts.readArtifact("ERC20Token");
-  const erc20Token: ERC20Token = <ERC20Token>(
-    await deployContract(deployer, erc20TokenArtifact, [name, symbol, decimals])
-  );
+  const erc20TokenFactory: ERC20Token__factory = <ERC20Token__factory>await ethers.getContractFactory("ERC20Token");
+  const erc20Token: ERC20Token = <ERC20Token>await erc20TokenFactory.connect(deployer).deploy(name, symbol, decimals);
   return erc20Token;
 }

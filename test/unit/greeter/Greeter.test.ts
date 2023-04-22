@@ -19,7 +19,10 @@ export function unitTestGreeter(): void {
     });
 
     it("should revert with GreeterError() on throwError()", async function () {
-      await expect(this.contracts.greeter.connect(this.signers.alice).throwError()).to.be.revertedWith("GreeterError");
+      await expect(this.contracts.greeter.connect(this.signers.alice).throwError()).to.be.revertedWithCustomError(
+        this.contracts.greeter,
+        "GreeterError",
+      );
     });
 
     it("should allow user to sendGreeting()", async function () {
@@ -63,7 +66,7 @@ export function unitTestGreeter(): void {
 
       await expect(
         this.contracts.greeter.connect(this.signers.alice).withdrawGreeting(this.mocks.erc20Token.address, amount),
-      ).to.be.revertedWith("InsufficientGreetings");
+      ).to.be.revertedWithCustomError(this.contracts.greeter, "InsufficientGreetings");
     });
 
     it("should allow user to withdrawGreeting()", async function () {

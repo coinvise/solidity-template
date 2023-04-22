@@ -1,9 +1,5 @@
-import "@nomiclabs/hardhat-waffle";
-import "@nomiclabs/hardhat-etherscan";
-import "@typechain/hardhat";
+import "@nomicfoundation/hardhat-toolbox";
 import "@primitivefi/hardhat-dodoc";
-import "hardhat-gas-reporter";
-import "solidity-coverage";
 import "hardhat-packager";
 
 import "./tasks/accounts";
@@ -26,17 +22,17 @@ const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
   etherscan: {
     apiKey: {
-      arbitrumOne: process.env.ARBSCAN_API_KEY,
-      avalanche: process.env.SNOWTRACE_API_KEY,
-      bsc: process.env.BSCSCAN_API_KEY,
-      goerli: process.env.ETHERSCAN_API_KEY,
-      kovan: process.env.ETHERSCAN_API_KEY,
-      mainnet: process.env.ETHERSCAN_API_KEY,
-      optimisticEthereum: process.env.OPTIMISM_API_KEY,
-      polygon: process.env.POLYGONSCAN_API_KEY,
-      polygonMumbai: process.env.POLYGONSCAN_API_KEY,
-      rinkeby: process.env.ETHERSCAN_API_KEY,
-      ropsten: process.env.ETHERSCAN_API_KEY,
+      arbitrumOne: process.env.ARBSCAN_API_KEY || "",
+      avalanche: process.env.SNOWTRACE_API_KEY || "",
+      bsc: process.env.BSCSCAN_API_KEY || "",
+      goerli: process.env.ETHERSCAN_API_KEY || "",
+      kovan: process.env.ETHERSCAN_API_KEY || "",
+      mainnet: process.env.ETHERSCAN_API_KEY || "",
+      optimisticEthereum: process.env.OPTIMISM_API_KEY || "",
+      polygon: process.env.POLYGONSCAN_API_KEY || "",
+      polygonMumbai: process.env.POLYGONSCAN_API_KEY || "",
+      rinkeby: process.env.ETHERSCAN_API_KEY || "",
+      ropsten: process.env.ETHERSCAN_API_KEY || "",
     },
   },
   gasReporter: {
@@ -71,7 +67,7 @@ const config: HardhatUserConfig = {
     tests: "./test",
   },
   solidity: {
-    version: "0.8.9",
+    version: "0.8.18",
     settings: {
       metadata: {
         // Not including the metadata hash
