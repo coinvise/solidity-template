@@ -40,6 +40,9 @@ const config: HardhatUserConfig = {
     enabled: process.env.REPORT_GAS ? true : false,
     excludeContracts: [],
     src: "./contracts",
+    outputFile: ".gas-snapshot",
+    noColors: true,
+    coinmarketcap: "",
   },
   networks: {
     hardhat: {
